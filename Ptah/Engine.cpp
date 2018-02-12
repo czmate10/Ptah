@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
@@ -13,6 +14,7 @@
 #include "Components/CameraComponent.h"
 #include "Resources/Resources.h"
 #include "Events/EventTypes/EventEntityCreated.h"
+#include "Logger.h"
 
 
 Ptah::Engine Ptah::Engine::instance_;
@@ -36,6 +38,8 @@ Ptah::Engine& Ptah::Engine::Instance()
 
 void Ptah::Engine::Init()
 {
+	Logger::Info("Initializing engine");
+
 	glfwInit();
 
 	window_->Create();
@@ -95,4 +99,18 @@ void Ptah::Engine::StartLoop()
 void Ptah::Engine::SetWindowTitle(const char* title)
 {
 	window_->SetTitle(title);
+}
+
+std::string Ptah::Engine::ReadFile(std::string path)
+{
+	// TODO: implement a proper file-system with support for multiple OS, add-ons, etc.
+	std::ifstream fileToRead(path);
+
+	if(!fileToRead.good())
+		Logger::Error("Trying to read file [" + path + "] that doesn't exist!");
+	assert(fileToRead.good());
+
+	std::stringstream buffer;
+	buffer << fileToRead.rdbuf();
+	return buffer.str();
 }
