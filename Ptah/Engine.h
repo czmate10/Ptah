@@ -51,6 +51,11 @@ namespace Ptah
 		void SetWindowTitle(const char* title);
 
 		/**
+		 * Returns contents of file relative to the working dir
+		 */
+		std::string ReadFile(std::string path);
+
+		/**
 		 * Sets the active camera
 		 */
 		inline void SetCamera(CameraComponent* camera)

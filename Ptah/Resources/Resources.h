@@ -10,6 +10,9 @@ namespace Ptah
 	// Static class for storing and retrieving resources from the hard-drive
 	class Resources {
 	public:
+		static const std::string PATH_SHADERS;
+		static const std::string PATH_TEXTURES;
+
 		/**
 		 * Loads common resources
 		 */

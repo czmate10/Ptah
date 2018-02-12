@@ -1,15 +1,22 @@
 #include "Resources.h"
 #include "ProgramLoader.h"
 #include "Render/Texture.h"
+#include "Logger.h"
 
+const std::string Ptah::Resources::PATH_SHADERS = "resources/shaders/";
+const std::string Ptah::Resources::PATH_TEXTURES = "resources/textures/";
 
 std::map<std::string, Ptah::Program*> Ptah::Resources::programs_ = std::map<std::string, Ptah::Program*>();
 std::map<std::string, Ptah::Texture*> Ptah::Resources::textures_ = std::map<std::string, Ptah::Texture*>();
 
+
+
+
 void Ptah::Resources::LoadCommon()
 {
-	LoadProgram("default", "resources/shaders/default.vs", "resources/shaders/default.fs");
-	LoadTexture("test_uv", "resources/textures/test_uv.png");
+	Logger::Debug("Loading common resources");
+	LoadProgram("default", "default.vs", "default.fs");
+	LoadTexture("test_uv", "test_uv.png");
 }
 
 Ptah::Program* Ptah::Resources::LoadProgram(std::string id, std::string vertex_shader_path, std::string fragment_shader_path)

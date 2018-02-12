@@ -14,16 +14,6 @@
 
 Ptah::Renderer::Renderer()
 {
-	// Generate deferred FBO
-	/*glGenFramebuffers(1, &deferredFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, deferredFBO);
-
-	// Generate depth render buffer
-	// TODO: update it when window gets resized
-	glGenRenderbuffers(1, &depthBuf);
-	glBindRenderbuffer(GL_RENDERBUFFER, depthBuf);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, window_.width, window_.height);*/
-
 }
 
 void Ptah::Renderer::Render(double dt)

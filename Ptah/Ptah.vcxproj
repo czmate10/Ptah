@@ -65,25 +65,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)build\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <OutDir>$(SolutionDir)build\out\$(Configuration)\$(PlatformTarget)\</OutDir>
     <LibraryPath>$(SolutionDir)3rdparty\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
-    <IntDir>$(SolutionDir)obj\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IntDir>$(SolutionDir)build\obj\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)build\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <OutDir>$(SolutionDir)build\out\$(Configuration)\$(PlatformTarget)\</OutDir>
     <LibraryPath>$(SolutionDir)3rdparty\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
-    <IntDir>$(SolutionDir)obj\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IntDir>$(SolutionDir)build\obj\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)build\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <OutDir>$(SolutionDir)build\out\$(Configuration)\$(PlatformTarget)\</OutDir>
     <LibraryPath>$(SolutionDir)3rdparty\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
-    <IntDir>$(SolutionDir)obj\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IntDir>$(SolutionDir)build\obj\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>$(SolutionDir)3rdparty\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)build\$(Configuration)\$(PlatformTarget)\</OutDir>
-    <IntDir>$(SolutionDir)obj\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <OutDir>$(SolutionDir)build\out\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(SolutionDir)build\obj\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -151,6 +151,7 @@
     <ClCompile Include="Entities\EntityManager.cpp" />
     <ClCompile Include="Events\EventCallbackList.cpp" />
     <ClCompile Include="Events\EventDispatcher.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Render\Mesh\Quad.cpp" />
     <ClCompile Include="Render\Material.cpp" />
     <ClCompile Include="Render\Mesh\Cube.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Events\EventCallbackList.h" />
     <ClInclude Include="Events\EventDispatcher.h" />
     <ClInclude Include="Events\EventListener.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Render\Mesh\Quad.h" />
     <ClInclude Include="Render\Material.h" />
     <ClInclude Include="Render\mesh\Cube.h" />

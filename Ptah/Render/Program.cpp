@@ -8,6 +8,7 @@
 #include <glm/detail/type_mat2x2.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Program.h"
+#include "Logger.h"
 
 Ptah::Program::Program()
 {
@@ -148,6 +149,7 @@ void Ptah::Program::AddShader(std::string shader_src, Ptah::ShaderType type)
 			delete[] log;
 		}
 
+		Logger::Error(std::string("Failed to compile shader, error:\n") + log_str);
 		throw std::runtime_error(std::string("failed to compile shader, error:\n") + log_str);
 	}
 	else
