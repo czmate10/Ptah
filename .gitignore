@@ -1,0 +1,11 @@
+.vs/
+build/Debug
+build/Release
+obj/
+3rdparty/
+
+*.exe
+*.obj
+*.pdb
+*.exe
+*.log
