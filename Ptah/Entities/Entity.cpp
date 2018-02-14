@@ -6,7 +6,10 @@ Ptah::Entity::Entity(std::string name, World& world)
 		: name_(name)
 		, world_(world)
 {
-	AddComponentInternal<Ptah::TransformComponent>();
+	transform_component_ = new Ptah::TransformComponent();
+	transform_component_->parent_ = this;
+	transform_component_->OnParentAdded();
+	components_[typeid(Ptah::TransformComponent)].push_back(transform_component_);
 }
 
 Ptah::Entity::Entity(const Entity& other)

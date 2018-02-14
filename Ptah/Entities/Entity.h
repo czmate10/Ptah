@@ -83,12 +83,12 @@ namespace Ptah
 
 		/**
 		 * Returns the transform component
-		 * You can get it via get_component as well, this is to speed up development
+		 * You can get it via get_component as well, this is to speed up performance
 		 * @return transform component
 		 */
 		inline TransformComponent* GetTransform()
 		{
-			return GetComponent<Ptah::TransformComponent>();
+			return transform_component_;
 		}
 
 		/**
@@ -103,6 +103,7 @@ namespace Ptah
 		std::string name_ = "unknown";
 		World& world_;
 		std::map<std::type_index, std::vector<Component*>> components_;
+		TransformComponent* transform_component_;
 
 		/**
 		 * Should only be constructed through a world object
@@ -116,20 +117,5 @@ namespace Ptah
 		 * Copies a game_object and all components it has
 		 */
 		Entity(const Entity& other);
-
-	private:
-		/**
-		 * Adds an internal component
-		 * Internal components, such as the transform component can only be initialized from within the entity class
-		 */
-		template <class ComponentType>
-		ComponentType* AddComponentInternal()
-		{
-			ComponentType* comp = new ComponentType();
-			comp->parent_ = this;
-			comp->OnParentAdded();
-			components_[typeid(ComponentType)].push_back(comp);
-			return comp;
-		}
 	};
 }
