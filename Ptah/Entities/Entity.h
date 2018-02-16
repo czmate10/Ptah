@@ -83,7 +83,7 @@ namespace Ptah
 
 		/**
 		 * Returns the transform component
-		 * You can get it via get_component as well, this is to speed up performance
+		 * You can get it via GetComponent<TransformComponent>() as well, this one is to speed up performance
 		 * @return transform component
 		 */
 		inline TransformComponent* GetTransform()

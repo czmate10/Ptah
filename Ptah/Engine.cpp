@@ -21,7 +21,6 @@ Ptah::Engine Ptah::Engine::instance_;
 
 Ptah::Engine::Engine() : window_(new Ptah::Window()), renderer_(new Ptah::Renderer()), event_dispatcher_(new Ptah::EventDispatcher())
 {
-	renderer_->AttachWindow(window_);
 }
 
 Ptah::Engine::~Engine()
@@ -82,6 +81,7 @@ void Ptah::Engine::StartLoop()
 
 		// render
 		renderer_->Render(lag / MS_PER_UPDATE);
+		window_->SwapBuffers();
 
 		fps_count++;
 		if(current_clock - fps_last_check > 1.0)

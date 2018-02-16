@@ -5,11 +5,20 @@ namespace Ptah
 {
 	class Mesh;
 	class Material;
+	enum LightType;
 
-	struct RenderCommand
+	struct RenderCommandMesh
 	{
 		glm::mat4 transform;
-		Material* mat;
+		Material* material;
 		Mesh* mesh;
+	};
+
+	struct RenderCommandLight
+	{
+		LightType type;
+		glm::mat4 position;
+		glm::vec3 direction;
+		glm::vec3 color;
 	};
 }

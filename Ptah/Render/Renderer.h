@@ -10,51 +10,56 @@ namespace Ptah
 	class World;
 	class Window;
 	class Mesh;
+	class Light;
+
+	class IRenderer
+	{
+	public:
+		virtual ~IRenderer()
+		{}
+
+		/**
+		 * Renders the whole world
+		 */
+		virtual void Render(double dt) = 0;
+		
+		/**
+		 * Adds a mesh to draw on next render
+		 */
+		virtual void AddMesh(RenderCommandMesh cmd) = 0;
+		
+		/**
+		 * Adds a light to draw on next render
+		 */
+		virtual void AddLight(RenderCommandLight cmd) = 0;
+
+	private:
+
+		/**
+		 * Clears the render commands, should be called on the end of every frame
+		 */
+		virtual void ClearRenderCommands() = 0;
+	};
+
 
 	class Renderer
 	{
 	public:
 		Renderer();
 
-		/**
-		 * Sets window to render to
-		 */
-		inline void AttachWindow(Window* window)
-		{
-			window_ = window;
-		}
-
-		/**
-		 * Renders the assigned world
-		 */
 		void Render(double dt);
+		void AddMesh(RenderCommandMesh cmd);
+		void AddLight(RenderCommandLight cmd);
 
-		/**
-		 * Renders given mesh
-		 * @param mesh
-		 */
-		void RenderMesh(Mesh* mesh);
-
-		/**
-		 * Pushes a render command to be processed on the next frame
-		 * @param mesh
-		 */
-		void PushRenderCommand(Mesh* mesh, glm::mat4 transform);
 
 	protected:
-		Window* window_;
-
-		std::vector<RenderCommand> render_commands_;
-
-
-		// Variables used for rendering
-		unsigned int depth_buf_;
-		unsigned int deferred_fbo_;
-
-
+		std::vector<RenderCommandMesh> render_commands_meshes_;
+		std::vector<RenderCommandLight> render_commands_lights_;
+		
 		/**
-		 * Clears the render commands, should be called on the end of every frame
+		 * Renders given mesh
 		 */
+		void RenderMesh(Mesh* mesh);
 		void ClearRenderCommands();
 	};
 }

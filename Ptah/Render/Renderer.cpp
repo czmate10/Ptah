@@ -14,6 +14,7 @@
 
 Ptah::Renderer::Renderer()
 {
+
 }
 
 void Ptah::Renderer::Render(double dt)
@@ -42,15 +43,14 @@ void Ptah::Renderer::Render(double dt)
 	prog->SetMatrix4("projection", camera->GetProjectionMatrix());
 
 
-	// Draw render commands
-	for(unsigned int i = 0; i < render_commands_.size(); i++)
+	// Draw meshes
+	for(unsigned int i = 0; i < render_commands_meshes_.size(); ++i)
 	{
-		prog->SetMatrix4("model", render_commands_[i].transform);
-		RenderMesh(render_commands_[i].mesh);
+		prog->SetMatrix4("model", render_commands_meshes_[i].transform);
+		RenderMesh(render_commands_meshes_[i].mesh);
 	}
 
 	ClearRenderCommands();
-	window_->SwapBuffers();
 }
 
 void Ptah::Renderer::RenderMesh(Mesh* mesh_ptr)
@@ -62,16 +62,18 @@ void Ptah::Renderer::RenderMesh(Mesh* mesh_ptr)
 		glDrawArrays(GL_TRIANGLES, 0, mesh_ptr->vertices_.size());
 }
 
-void Ptah::Renderer::PushRenderCommand(Mesh* mesh, glm::mat4 transform)
+void Ptah::Renderer::AddMesh(RenderCommandMesh cmd)
 {
-	RenderCommand cmd = {};
-	cmd.mesh = mesh;
-	cmd.transform = transform;
+	render_commands_meshes_.push_back(cmd);
+}
 
-	render_commands_.push_back(cmd);
+void Ptah::Renderer::AddLight(RenderCommandLight cmd)
+{
+	render_commands_lights_.push_back(cmd);
 }
 
 void Ptah::Renderer::ClearRenderCommands()
 {
-	render_commands_.clear();
+	render_commands_meshes_.clear();
+	render_commands_lights_.clear();
 }

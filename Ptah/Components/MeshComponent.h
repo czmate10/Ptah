@@ -6,6 +6,7 @@
 namespace Ptah
 {
 	class Mesh;
+	class Material;
 
 	class MeshComponent : public Component
 	{
@@ -17,7 +18,8 @@ namespace Ptah
 
 		~MeshComponent();
 
-		void OnParentAdded();
+		void OnParentAdded()
+		{}
 
 		MeshComponent* Clone()
 		{
@@ -46,8 +48,24 @@ namespace Ptah
 		 */
 		void PreRender(Event* ev);
 
+		/**
+		 * Sets material to render meshes with
+		 */
+		inline void SetMaterial(Material* mat)
+		{
+			material_ = mat;
+		}
+
+		/**
+		 * Get material
+		 */
+		inline Material* GetMaterial()
+		{
+			return material_;
+		}
+
 	private:
 		std::vector<Mesh*> meshes_;
-		TransformComponent* transform_;
+		Material* material_;
 	};
 }

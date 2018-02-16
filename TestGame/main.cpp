@@ -7,6 +7,7 @@
 #include "Components/CameraComponent.h"
 #include "Events/EventTypes/EventKeyPressed.h"
 #include "Render/Mesh/Quad.h"
+#include "Components/LightComponent.h"
 
 
 void on_key_pressed(Ptah::Event* ev_)
@@ -37,12 +38,20 @@ void init()
 
 	// Sphere
 	{
-		auto entity_sphere = world.GetEntityManager().Add("test_cube");
+		auto entity_sphere = world.GetEntityManager().Add("test_sphere");
 		entity_sphere->GetTransform()->SetPos(glm::vec3(-3.5f, 0.0f, 0.0f));
 		auto mesh_comp = new Ptah::MeshComponent();
 		entity_sphere->AddComponent<Ptah::MeshComponent>(mesh_comp);
 		auto sphere = new Ptah::Sphere();
 		mesh_comp->AddMesh(sphere);
+	}
+
+	// Light #1
+	{
+		auto entity_light = world.GetEntityManager().Add("test_light01");
+		entity_light->GetTransform()->SetPos(glm::vec3(10.0f, 10.0f, 10.0f));
+		auto light_comp = new Ptah::LightComponent(Ptah::LightType::POINT, glm::vec3(1.0f, 1.0f, 1.0f));
+		entity_light->AddComponent<Ptah::LightComponent>(light_comp);
 	}
 
 	// Camera
