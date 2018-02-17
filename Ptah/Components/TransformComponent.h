@@ -27,6 +27,30 @@ namespace Ptah
 		glm::vec3 GetScale();
 
 		/**
+		 * Returns normal up vector
+		 */
+		inline glm::vec3 GetUp()
+		{
+			return up_;
+		}
+
+		/**
+		 * Returns normal front vector
+		 */
+		inline glm::vec3 GetFront()
+		{
+			return front_;
+		}
+
+		/**
+		 * Returns normal right vector
+		 */
+		inline glm::vec3 GetRight()
+		{
+			return right_;
+		}
+
+		/**6
 		 * Sets rotation
 		 * Uses degrees, and calculated radians from those.
 		 * @param rotation_new rotation
@@ -55,6 +79,10 @@ namespace Ptah
 		glm::vec3 rotation_;
 		glm::vec3 scale_;
 		glm::mat4 transform_;
+
+		glm::vec3 up_;
+		glm::vec3 front_;
+		glm::vec3 right_;
 
 	private:
 		TransformComponent();

@@ -74,6 +74,7 @@ void Ptah::Window::Create()
 	glfwWindowHint(GLFW_RESIZABLE, is_resizable ? GL_TRUE : GL_FALSE);
 
 	window_ = glfwCreateWindow(width, height, title, nullptr, nullptr);
+	glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);  
 	glfwSetWindowUserPointer(window_, this);
 
 	glfwSetKeyCallback(window_, key_callback_internal);

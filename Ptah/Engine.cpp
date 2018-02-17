@@ -52,8 +52,8 @@ void Ptah::Engine::Init()
 
 void Ptah::Engine::Shutdown()
 {
-	glfwTerminate();
-	window_->Close();
+	if(window_ != nullptr)
+		window_->Close();
 }
 
 void Ptah::Engine::StartLoop()
@@ -94,6 +94,8 @@ void Ptah::Engine::StartLoop()
 			fps_count = 0;
 		}
 	}
+	
+	glfwTerminate();
 }
 
 void Ptah::Engine::SetWindowTitle(const char* title)

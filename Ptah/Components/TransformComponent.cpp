@@ -1,6 +1,7 @@
 #include "Components/TransformComponent.h"
 #include "glm/glm.hpp"
 #include "glm/gtx/transform.hpp"
+#include <iostream>
 
 const char* Ptah::TransformComponent::name = "Transform Component";
 
@@ -32,7 +33,7 @@ void Ptah::TransformComponent::SetPos(glm::vec3 pos_new)
 
 void Ptah::TransformComponent::SetRotation(glm::vec3 rotation_new)
 {
-	rotation_ = glm::vec3(glm::radians(rotation_new.x), glm::radians(rotation_new.y), glm::radians(rotation_new.z));
+	rotation_ = rotation_new;
 	Recalculate();
 }
 
@@ -44,6 +45,16 @@ void Ptah::TransformComponent::SetScale(glm::vec3 scale_new)
 
 void Ptah::TransformComponent::Recalculate()
 {
+	// Calculate front
+	glm::vec3 front;
+	front.x = glm::cos(rotation_.y) * glm::cos(rotation_.x);
+	front.y = glm::sin(rotation_.y);
+	front.z = glm::cos(rotation_.y) * glm::sin(rotation_.x);
+	front_ = glm::normalize(front);
+
+	right_ = glm::normalize(glm::cross(front_, up_));
+
+
 	transform_ = glm::mat4();
 
 	transform_ = glm::translate(transform_, pos_);	
@@ -64,7 +75,12 @@ Ptah::TransformComponent *Ptah::TransformComponent::Clone() {
 	return new_comp;
 }
 
-Ptah::TransformComponent::TransformComponent() : transform_(glm::mat4(1.0f)), pos_(glm::vec3(0.0f, 0.0f, 0.0f)), rotation_(glm::vec3(0.0f, 0.0f, 0.0f)), scale_(glm::vec3(1.0f, 1.0f, 1.0f))
+Ptah::TransformComponent::TransformComponent() 
+	: transform_(glm::mat4(1.0f))
+	, pos_(glm::vec3(0.0f, 0.0f, 0.0f))
+	, rotation_(glm::vec3(0.0f, 0.0f, 0.0f))
+	, scale_(glm::vec3(1.0f, 1.0f, 1.0f))
+	, up_(glm::vec3(0.0f, 1.0f, 0.0f))
 {
 }
 

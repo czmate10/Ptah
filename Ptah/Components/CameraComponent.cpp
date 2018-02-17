@@ -16,7 +16,7 @@ Ptah::CameraComponent::CameraComponent() : type(camera_type::PERSPECTIVE)
 void Ptah::CameraComponent::UpdateView()
 {
 	auto transform = GetParent()->GetTransform();
-	view_ = glm::lookAt(transform->GetPos(), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	view_ = glm::lookAt(transform->GetPos(), transform->GetPos() + transform->GetFront(), transform->GetUp());
 }
 
 void Ptah::CameraComponent::UpdateProjection(Ptah::camera_type type, float fov, float aspect, float near, float far)

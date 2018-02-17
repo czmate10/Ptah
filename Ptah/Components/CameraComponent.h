@@ -13,11 +13,11 @@ namespace Ptah
 
 	class CameraComponent : public Component {
 	public:
+		camera_type type = camera_type::PERSPECTIVE;
 		float fov = 60.0f;
 		float aspect = 800.0f/600.0f;
 		float near = 0.3f;
 		float far = 1000.0f;
-		camera_type type = camera_type::PERSPECTIVE;
 
 		CameraComponent();
 		Component* Clone();
