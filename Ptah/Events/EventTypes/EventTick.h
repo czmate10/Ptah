@@ -9,11 +9,11 @@ namespace Ptah
 	class EventTick : public Event
 	{
 	public:
-		EventTick(double time) : Event("tick")
+		EventTick(double time_) : Event("tick")
 		{
-			time_ = time;
+			time = time_;
 		}
 
-		double time_;
+		double time;
 	};
 }

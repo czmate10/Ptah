@@ -9,15 +9,15 @@ namespace Ptah
 	class EventMouseClicked : public Event
 	{
 	public:
-		EventMouseClicked(int button, int action, int mods) : Event("mouse_clicked")
+		EventMouseClicked(int button_, int action_, int mods_) : Event("mouse_clicked")
 		{
-			button_ = button;
-			action_ = action;
-			mods_ = mods;
+			button = button_;
+			action = action_;
+			mods = mods_;
 		}
 
-		int button_;
-		int action_;
-		int mods_;
+		int button;
+		int action;
+		int mods;
 	};
 }

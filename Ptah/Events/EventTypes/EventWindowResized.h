@@ -9,13 +9,13 @@ namespace Ptah
 	class EventWindowResized : public Event
 	{
 	public:
-		EventWindowResized(int width, int height) : Event("window_resized")
+		EventWindowResized(int width_, int height_) : Event("window_resized")
 		{
-			width_ = width;
-			height_ = height;
+			width = width_;
+			height = height_;
 		}
 
-		int width_;
-		int height_;
+		int width;
+		int height;
 	};
 }

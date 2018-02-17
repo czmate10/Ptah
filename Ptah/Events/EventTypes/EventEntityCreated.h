@@ -11,10 +11,10 @@ namespace Ptah
 	class EventEntityCreated : public Event
 	{
 	public:
-		EventEntityCreated(Entity* entity) : Event("entity_created"), entity_(entity)
+		EventEntityCreated(Entity* entity_) : Event("entity_created"), entity(entity_)
 		{
 		}
 
-		Entity* entity_;
+		Entity* entity;
 	};
 }

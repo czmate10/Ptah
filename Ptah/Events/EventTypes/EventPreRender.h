@@ -9,11 +9,11 @@ namespace Ptah
 	class EventPreRender : public Event
 	{
 	public:
-		EventPreRender(double time) : Event("pre_render")
+		EventPreRender(double time_) : Event("pre_render")
 		{
-			time_ = time;
+			time = time_;
 		}
 
-		double time_;
+		double time;
 	};
 }

@@ -9,17 +9,17 @@ namespace Ptah
 	class EventKeyPressed : public Event
 	{
 	public:
-		EventKeyPressed(int key, int scancode, int action, int mods) : Event("key_pressed")
+		EventKeyPressed(int key_, int scancode_, int action_, int mods_) : Event("key_pressed")
 		{
-			key_ = key;
-			scancode_ = scancode;
-			action_ = action;
-			mods_ = mods;
+			key = key_;
+			scancode = scancode_;
+			action = action_;
+			mods = mods_;
 		}
 
-		int key_;
-		int scancode_;
-		int action_;
-		int mods_;
+		int key;
+		int scancode;
+		int action;
+		int mods;
 	};
 }

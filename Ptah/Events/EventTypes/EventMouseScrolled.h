@@ -9,13 +9,13 @@ namespace Ptah
 	class EventMouseScrolled : public Event
 	{
 	public:
-		EventMouseScrolled(double offset_x, double offset_y) : Event("mouse_scrolled")
+		EventMouseScrolled(double offset_x_, double offset_y_) : Event("mouse_scrolled")
 		{
-			offset_x_ = offset_x;
-			offset_y_ = offset_y;
+			offset_x = offset_x_;
+			offset_y = offset_y_;
 		}
 
-		double offset_x_;
-		double offset_y_;
+		double offset_x;
+		double offset_y;
 	};
 }

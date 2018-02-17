@@ -9,13 +9,13 @@ namespace Ptah
 	class EventCursorMoved : public Event
 	{
 	public:
-		EventCursorMoved(double mouse_x, double mouse_y) : Event("cursor_moved")
+		EventCursorMoved(double mouse_x_, double mouse_y_) : Event("cursor_moved")
 		{
-			mouse_x_ = mouse_x;
-			mouse_y_ = mouse_y;
+			mouse_x = mouse_x_;
+			mouse_y = mouse_y_;
 		}
 
-		double mouse_x_;
-		double mouse_y_;
+		double mouse_x;
+		double mouse_y;
 	};
 }
