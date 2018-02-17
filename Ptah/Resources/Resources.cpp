@@ -1,6 +1,6 @@
-#include "Resources.h"
-#include "ProgramLoader.h"
-#include "Render/Texture.h"
+#include "Resources/Resources.h"
+#include "Resources/ProgramLoader.h"
+#include "Resources/TextureLoader.h"
 #include "Logger.h"
 
 const std::string Ptah::Resources::PATH_SHADERS = "resources/shaders/";
@@ -15,8 +15,15 @@ std::map<std::string, Ptah::Texture*> Ptah::Resources::textures_ = std::map<std:
 void Ptah::Resources::LoadCommon()
 {
 	Logger::Debug("Loading common resources");
+
+	// Shaders
 	LoadProgram("default", "default.vs", "default.fs");
-	LoadTexture("test_uv", "test_uv.png");
+
+	// Textures
+	LoadTexture("test_uv", TextureType::TEXTURE_2D, "test_uv.png");
+	/*LoadTexture("bricks", TextureType::TEXTURE_2D, "bricks.jpg");
+	LoadTexture("bricks_disp", TextureType::TEXTURE_2D, "bricks_disp.jpg");
+	LoadTexture("bricks_normal", TextureType::TEXTURE_2D, "bricks_normal.jpg");*/
 }
 
 Ptah::Program* Ptah::Resources::LoadProgram(std::string id, std::string vertex_shader_path, std::string fragment_shader_path)
@@ -32,9 +39,12 @@ Ptah::Program* Ptah::Resources::GetProgram(std::string id)
 	return programs_.at(id);
 }
 
-Ptah::Texture* Ptah::Resources::LoadTexture(std::string id, std::string path)
+Ptah::Texture* Ptah::Resources::LoadTexture(std::string id, TextureType type, std::string path)
 {
-	return nullptr;
+	auto tex = TextureLoader::Load(type, path);
+	textures_.insert(std::make_pair(id, tex));
+
+	return tex;
 }
 
 Ptah::Texture* Ptah::Resources::GetTexture(std::string id)

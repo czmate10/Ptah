@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <string>
+#include "Render/Texture.h"
 
 namespace Ptah
 {
@@ -21,7 +22,7 @@ namespace Ptah
 		static Program* LoadProgram(std::string id, std::string vertex_shader_path, std::string fragment_shader_path);
 		static Program* GetProgram(std::string id);
 
-		static Texture* LoadTexture(std::string id, std::string path);
+		static Texture* LoadTexture(std::string id, TextureType type, std::string path);
 		static Texture* GetTexture(std::string id);
 
 	protected:

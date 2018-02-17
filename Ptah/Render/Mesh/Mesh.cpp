@@ -55,14 +55,14 @@ void Ptah::Mesh::Finalize()
 	// vertices
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)at);
-	at += vertices_.size() * sizeof(float);
+	at += vertices_.size() * sizeof(float) * 3;
 
 	// normals
 	if(!normals_.empty())
 	{
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (GLvoid*)at);
-		at += normals_.size() * sizeof(float);
+		at += normals_.size() * sizeof(float) * 3;
 	}
 
 	// uvs
@@ -70,7 +70,7 @@ void Ptah::Mesh::Finalize()
 	{
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (GLvoid*)at);
-		at += uvs_.size() * sizeof(float);
+		at += uvs_.size() * sizeof(float) * 2;
 	}
 
 	// triangles

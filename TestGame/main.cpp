@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 
 #include "Engine.h"
+#include "Render/Mesh/Plane.h"
 #include "Render/Mesh/Sphere.h"
 #include "Render/Mesh/Cube.h"
 #include "Components/MeshComponent.h"
@@ -15,6 +16,7 @@
 
 // Constants for quick calculations
 const float PI_HALF = glm::pi<float>()/2;
+const float PI_89 = glm::pi<float>()/180*89;
 
 // Constants to control movement speed
 const float MOVE_SPEED = 0.05f;
@@ -51,10 +53,10 @@ void on_cursor_moved(Ptah::Event* ev_)
 	rotation.x += offset_x;
 	rotation.y -= offset_y;
 
-	if(rotation.y > PI_HALF)
-		rotation.y = PI_HALF;
-	else if(rotation.y < -PI_HALF)
-		rotation.y = -PI_HALF;
+	if(rotation.y >= PI_89)
+		rotation.y = PI_89;
+	else if(rotation.y <= -PI_89)
+		rotation.y = -PI_89;
 
 
 	entity_camera->GetTransform()->SetRotation(rotation);
@@ -66,24 +68,35 @@ void on_tick(Ptah::Event* ev_)
 	auto ev = static_cast<Ptah::EventTick*>(ev_);
 	auto timeF = (float)ev->time;
 	auto transform = entity_camera->GetTransform();
-	
+	auto speed = MOVE_SPEED;
+
+	// Speed up on Shift / slow down on Ctrl
+	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		speed *= 5;
+
+	else if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+		speed /= 5;
+
+
+	// Up on E / down on Q
 	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_E) == GLFW_PRESS)
-		transform->SetPos(transform->GetPos() + (transform->GetUp() * MOVE_SPEED * timeF));
+		transform->SetPos(transform->GetPos() + (transform->GetUp() * speed * timeF));
 
 	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_Q) == GLFW_PRESS)
-		transform->SetPos(transform->GetPos() - (transform->GetUp() * MOVE_SPEED * timeF));
+		transform->SetPos(transform->GetPos() - (transform->GetUp() * speed * timeF));
+
 	
 	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_W) == GLFW_PRESS)
-		transform->SetPos(transform->GetPos() + (transform->GetFront() * MOVE_SPEED * timeF));
+		transform->SetPos(transform->GetPos() + (transform->GetFront() * speed * timeF));
 	
 	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_S) == GLFW_PRESS)
-		transform->SetPos(transform->GetPos() - (transform->GetFront() * MOVE_SPEED * timeF));
+		transform->SetPos(transform->GetPos() - (transform->GetFront() * speed * timeF));
 
 	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_D) == GLFW_PRESS)
-		transform->SetPos(transform->GetPos() + (transform->GetRight() * MOVE_SPEED * timeF));
+		transform->SetPos(transform->GetPos() + (transform->GetRight() * speed * timeF));
 
 	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_A) == GLFW_PRESS)
-		transform->SetPos(transform->GetPos() - (transform->GetRight() * MOVE_SPEED * timeF));
+		transform->SetPos(transform->GetPos() - (transform->GetRight() * speed * timeF));
 }
 
 // Close window when user presses escape
@@ -107,32 +120,57 @@ void init()
 	Ptah::World world;
 	Ptah::Engine::Instance().SetWorld(&world);
 
+	// Floor
+	{
+		auto entity_floor = world.GetEntityManager().Add("test_floor");
+
+		auto mesh_comp = new Ptah::MeshComponent();
+		entity_floor->AddComponent<Ptah::MeshComponent>(mesh_comp);
+		auto plane = new Ptah::Plane();
+		mesh_comp->AddMesh(plane);
+		
+		entity_floor->GetTransform()->SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
+		entity_floor->GetTransform()->SetScale(glm::vec3(25.0f, 1.0f, 25.0f));
+	}
+
 	// Cube
 	{
 		auto entity_cube = world.GetEntityManager().Add("test_cube");
-		entity_cube->GetTransform()->SetPos(glm::vec3(0.0f, 0.0f, 0.0f));
+
 		auto mesh_comp = new Ptah::MeshComponent();
 		entity_cube->AddComponent<Ptah::MeshComponent>(mesh_comp);
 		auto cube = new Ptah::Cube();
 		mesh_comp->AddMesh(cube);
+
+		entity_cube->GetTransform()->SetPos(glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 
 	// Sphere
 	{
 		auto entity_sphere = world.GetEntityManager().Add("test_sphere");
-		entity_sphere->GetTransform()->SetPos(glm::vec3(-3.5f, 0.0f, 0.0f));
+
 		auto mesh_comp = new Ptah::MeshComponent();
 		entity_sphere->AddComponent<Ptah::MeshComponent>(mesh_comp);
 		auto sphere = new Ptah::Sphere();
 		mesh_comp->AddMesh(sphere);
+
+		entity_sphere->GetTransform()->SetPos(glm::vec3(-3.5f, 1.5f, 1.0f));
 	}
 
 	// Light #1
 	{
 		auto entity_light = world.GetEntityManager().Add("test_light01");
-		entity_light->GetTransform()->SetPos(glm::vec3(10.0f, 10.0f, 10.0f));
+
+		auto mesh_comp = new Ptah::MeshComponent();
+		entity_light->AddComponent<Ptah::MeshComponent>(mesh_comp);
+		auto cube = new Ptah::Cube();
+		mesh_comp->AddMesh(cube);
+
 		auto light_comp = new Ptah::LightComponent(Ptah::LightType::POINT, glm::vec3(1.0f, 1.0f, 1.0f));
 		entity_light->AddComponent<Ptah::LightComponent>(light_comp);
+
+		
+		entity_light->GetTransform()->SetPos(glm::vec3(10.0f, 10.0f, 10.0f));
 	}
 
 	// Camera

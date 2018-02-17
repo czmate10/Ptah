@@ -92,7 +92,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)3rdparty\glfw\include;$(SolutionDir)3rdparty\glew\include;$(SolutionDir)3rdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)3rdparty\glfw\include;$(SolutionDir)3rdparty\glew\include;$(SolutionDir)3rdparty\glm;$(SolutionDir)3rdparty\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -110,7 +110,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)3rdparty\glfw\include;$(SolutionDir)3rdparty\glew\include;$(SolutionDir)3rdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)3rdparty\glfw\include;$(SolutionDir)3rdparty\glew\include;$(SolutionDir)3rdparty\glm;$(SolutionDir)3rdparty\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -125,7 +125,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)3rdparty\glfw\include;$(SolutionDir)3rdparty\glew\include;$(SolutionDir)3rdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)3rdparty\glfw\include;$(SolutionDir)3rdparty\glew\include;$(SolutionDir)3rdparty\glm;$(SolutionDir)3rdparty\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Lib>
@@ -134,7 +134,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)3rdparty\glfw\include;$(SolutionDir)3rdparty\glew\include;$(SolutionDir)3rdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)3rdparty\glfw\include;$(SolutionDir)3rdparty\glew\include;$(SolutionDir)3rdparty\glm;$(SolutionDir)3rdparty\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Lib>
@@ -153,6 +153,7 @@
     <ClCompile Include="Events\EventDispatcher.cpp" />
     <ClCompile Include="Components\LightComponent.cpp" />
     <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="Render\Mesh\Plane.cpp" />
     <ClCompile Include="Render\Mesh\Quad.cpp" />
     <ClCompile Include="Render\Material.cpp" />
     <ClCompile Include="Render\Mesh\Cube.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Render\Mesh\Sphere.cpp" />
     <ClCompile Include="Render\Program.cpp" />
     <ClCompile Include="Render\Renderer.cpp" />
+    <ClCompile Include="Render\Texture.cpp" />
     <ClCompile Include="Resources\ProgramLoader.cpp" />
     <ClCompile Include="Resources\Resources.cpp" />
     <ClCompile Include="Resources\TextureLoader.cpp" />
@@ -188,6 +190,7 @@
     <ClInclude Include="Events\EventDispatcher.h" />
     <ClInclude Include="Events\EventListener.h" />
     <ClInclude Include="Components\LightComponent.h" />
+    <ClInclude Include="Render\Mesh\Plane.h" />
     <ClInclude Include="Render\Light.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Render\Mesh\Quad.h" />

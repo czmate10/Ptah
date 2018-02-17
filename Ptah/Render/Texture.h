@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace Ptah
 {
@@ -13,12 +14,15 @@ namespace Ptah
 	class Texture
 	{
 	public:
-		std::string Id;
 		std::string Path;
 		TextureType Type;
+		int Width;
+		int Height;
+		int NrChannels;
 
-		Texture(std::string id, TextureType type, std::string path = "generated") : Id(id), Type(type), Path(path)
-		{
-		}
+		Texture(TextureType type, std::string path, int width, int height, int nr_channels, unsigned char* raw_data);
+
+	private:
+		unsigned int texture_handle_;
 	};
 }

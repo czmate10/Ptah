@@ -1,8 +1,13 @@
 #pragma once
+#include <string>
+#include "Render/Texture.h"
 
 namespace Ptah
 {
-	class TextureLoader {
+	class Texture;
 
+	class TextureLoader {
+	public:
+		static Texture* Load(TextureType type, std::string path);
 	};
 }
