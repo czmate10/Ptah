@@ -92,7 +92,7 @@ void Ptah::Engine::StartLoop()
 
 			window_->SetTitle(fps_string.str().c_str());
 			fps_count = 0;
-		}
+		}	
 	}
 	
 	glfwTerminate();

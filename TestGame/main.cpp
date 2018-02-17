@@ -18,14 +18,15 @@ const float PI_HALF = glm::pi<float>()/2;
 
 // Constants to control movement speed
 const float MOVE_SPEED = 0.05f;
-const float MOUSE_SENS = 0.003f;
+const float MOUSE_SENS = 0.001f;
 
 // Our camera object
 Ptah::Entity* entity_camera;
 
 // Variables for looking around
-float mouse_last_x = 400;
-float mouse_last_y = 300;
+float mouse_last_x = -1;
+float mouse_last_y = -1;
+bool mouse_first = true;
 
 // Camera rotation
 void on_cursor_moved(Ptah::Event* ev_)
@@ -38,6 +39,13 @@ void on_cursor_moved(Ptah::Event* ev_)
 	float offset_y = (y - mouse_last_y) * MOUSE_SENS;
 	mouse_last_x = x;
 	mouse_last_y = y;
+
+	// It's silly to solve it like this, but in a test application it should suffice
+	if(mouse_first)
+	{
+		mouse_first = false;
+		return;
+	}
 
 	auto rotation = entity_camera->GetTransform()->GetRotation();
 	rotation.x += offset_x;
@@ -58,6 +66,12 @@ void on_tick(Ptah::Event* ev_)
 	auto ev = static_cast<Ptah::EventTick*>(ev_);
 	auto timeF = (float)ev->time;
 	auto transform = entity_camera->GetTransform();
+	
+	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_E) == GLFW_PRESS)
+		transform->SetPos(transform->GetPos() + (transform->GetUp() * MOVE_SPEED * timeF));
+
+	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_Q) == GLFW_PRESS)
+		transform->SetPos(transform->GetPos() - (transform->GetUp() * MOVE_SPEED * timeF));
 	
 	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_W) == GLFW_PRESS)
 		transform->SetPos(transform->GetPos() + (transform->GetFront() * MOVE_SPEED * timeF));
@@ -127,6 +141,7 @@ void init()
 	camera_comp->SetActive();
 	entity_camera->AddComponent<Ptah::CameraComponent>(camera_comp);
 	entity_camera->GetTransform()->SetPos(glm::vec3(0.0f, 0.0f, 3.0f));
+	entity_camera->GetTransform()->SetRotation(glm::vec3(-glm::pi<float>()/2.0f, 0.0f, 0.0f));
 
 	Ptah::Engine::Instance().StartLoop();
 

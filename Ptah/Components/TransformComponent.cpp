@@ -1,7 +1,6 @@
 #include "Components/TransformComponent.h"
 #include "glm/glm.hpp"
 #include "glm/gtx/transform.hpp"
-#include <iostream>
 
 const char* Ptah::TransformComponent::name = "Transform Component";
 

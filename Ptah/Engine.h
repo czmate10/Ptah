@@ -1,5 +1,5 @@
 #pragma once
-#define FPS 60.0
+#define FPS 144.0
 #define MS_PER_UPDATE (1.0/FPS) // FPS
 
 // Game applications using this engine should be able to use most of the engine's stuff by including this file
