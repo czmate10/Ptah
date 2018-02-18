@@ -18,9 +18,9 @@
 const float PI_HALF = glm::pi<float>()/2;
 const float PI_89 = glm::pi<float>()/180*89;
 
-// Constants to control movement speed
+// Constants for movement speed
 const float MOVE_SPEED = 0.05f;
-const float MOUSE_SENS = 0.001f;
+const float MOUSE_SENS = 0.0005f;
 
 // Our camera object
 Ptah::Entity* entity_camera;
@@ -30,13 +30,49 @@ float mouse_last_x = -1;
 float mouse_last_y = -1;
 bool mouse_first = true;
 
-// Camera rotation
-void on_cursor_moved(Ptah::Event* ev_)
-{
-	auto ev = static_cast<Ptah::EventCursorMoved*>(ev_);
-	float x = (float)ev->mouse_x;
-	float y = (float)ev->mouse_y;
 
+void handle_keyboard(float dt)
+{
+	auto speed = MOVE_SPEED;
+	auto transform = entity_camera->GetTransform();
+
+	// Speed up on Shift / slow down on Ctrl
+	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		speed *= 5;
+
+	else if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+		speed /= 5;
+
+
+	// Up on E / down on Q
+	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_E) == GLFW_PRESS)
+		transform->SetPos(transform->GetPos() + (transform->GetUp() * speed));
+
+	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_Q) == GLFW_PRESS)
+		transform->SetPos(transform->GetPos() - (transform->GetUp() * speed));
+
+	
+	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_W) == GLFW_PRESS)
+		transform->SetPos(transform->GetPos() + (transform->GetFront() * speed));
+	
+	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_S) == GLFW_PRESS)
+		transform->SetPos(transform->GetPos() - (transform->GetFront() * speed));
+
+	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_D) == GLFW_PRESS)
+		transform->SetPos(transform->GetPos() + (transform->GetRight() * speed));
+
+	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_A) == GLFW_PRESS)
+		transform->SetPos(transform->GetPos() - (transform->GetRight() * speed));
+}
+
+void handle_mouse(float dt)
+{
+	auto transform = entity_camera->GetTransform();
+	double x_, y_;
+	Ptah::Engine::Instance().GetWindow()->GetCursorPos(&x_, &y_);
+
+	float x = (float)x_;
+	float y = (float)y_;
 	float offset_x = (x - mouse_last_x) * MOUSE_SENS;
 	float offset_y = (y - mouse_last_y) * MOUSE_SENS;
 	mouse_last_x = x;
@@ -66,38 +102,12 @@ void on_cursor_moved(Ptah::Event* ev_)
 void on_tick(Ptah::Event* ev_)
 {
 	auto ev = static_cast<Ptah::EventTick*>(ev_);
-	auto timeF = (float)ev->time;
-	auto transform = entity_camera->GetTransform();
-	auto speed = MOVE_SPEED;
+	auto dt = (float)ev->time;
 
-	// Speed up on Shift / slow down on Ctrl
-	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-		speed *= 5;
-
-	else if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
-		speed /= 5;
-
-
-	// Up on E / down on Q
-	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_E) == GLFW_PRESS)
-		transform->SetPos(transform->GetPos() + (transform->GetUp() * speed * timeF));
-
-	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_Q) == GLFW_PRESS)
-		transform->SetPos(transform->GetPos() - (transform->GetUp() * speed * timeF));
-
-	
-	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_W) == GLFW_PRESS)
-		transform->SetPos(transform->GetPos() + (transform->GetFront() * speed * timeF));
-	
-	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_S) == GLFW_PRESS)
-		transform->SetPos(transform->GetPos() - (transform->GetFront() * speed * timeF));
-
-	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_D) == GLFW_PRESS)
-		transform->SetPos(transform->GetPos() + (transform->GetRight() * speed * timeF));
-
-	if(Ptah::Engine::Instance().GetWindow()->GetKey(GLFW_KEY_A) == GLFW_PRESS)
-		transform->SetPos(transform->GetPos() - (transform->GetRight() * speed * timeF));
+	handle_mouse(dt);
+	handle_keyboard(dt);
 }
+
 
 // Close window when user presses escape
 void on_key_pressed(Ptah::Event* ev_)
@@ -115,7 +125,6 @@ void init()
 	
 	Ptah::Engine::Instance().GetEventDispatcher()->AddEventListener("tick", &on_tick);
 	Ptah::Engine::Instance().GetEventDispatcher()->AddEventListener("key_pressed", &on_key_pressed);
-	Ptah::Engine::Instance().GetEventDispatcher()->AddEventListener("cursor_moved", &on_cursor_moved);
 
 	Ptah::World world;
 	Ptah::Engine::Instance().SetWorld(&world);

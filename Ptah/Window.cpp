@@ -99,6 +99,11 @@ int Ptah::Window::GetKey(const int key) const
 	return glfwGetKey(window_, key);
 }
 
+void Ptah::Window::GetCursorPos(double *x, double *y) const
+{
+	return glfwGetCursorPos(window_, x, y);
+}
+
 void Ptah::Window::SetTitle(const char* title) const
 {
 	glfwSetWindowTitle(window_, title);

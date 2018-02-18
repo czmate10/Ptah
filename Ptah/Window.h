@@ -41,6 +41,11 @@ namespace Ptah
 		int GetKey(const int key) const;
 
 		/**
+		 * Returns the current position of the cursor
+		 */
+		void GetCursorPos(double *x, double *y) const;
+
+		/**
 		 * Set title of window after it's already been created
 		 */
 		void SetTitle(const char* title) const;
